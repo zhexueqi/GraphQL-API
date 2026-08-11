@@ -1,5 +1,7 @@
 # GraphQL API Server
 
+[![CI](https://github.com/zhexueqi/GraphQL-API/actions/workflows/ci.yml/badge.svg)](https://github.com/zhexueqi/GraphQL-API/actions/workflows/ci.yml)
+
 This is a read-only Apollo GraphQL API backed by the JSON files in this directory.
 
 ## Run
@@ -42,9 +44,30 @@ The endpoint accepts authenticated JSON `POST` requests and authenticated `GET` 
 - `functionString` is returned as text and is never executed.
 - Fields present in the JSON but absent from the required Schema are intentionally ignored.
 
+## Validate data
+
+The bundled data can be validated without starting the server:
+
+```text
+npm run validate:data
+```
+
+The command checks JSON shape, IDs, relationship references, and parent cycles before reporting the entity counts. It exits with status `1` and prints the validation reason to stderr when `DATA_DIR` is missing or invalid.
+
+## Production considerations
+
+- The fixed token is included for this coding exercise only. Set `AUTH_TOKEN` to a deployment-specific secret outside the assessment environment.
+- The exercise allows all CORS origins for easy evaluation. Restrict `Access-Control-Allow-Origin` to trusted clients in production.
+- Introspection is enabled for evaluator convenience and remains authenticated. Disable it when the deployed API does not need schema discovery.
+- Terminate TLS and apply rate limiting at the reverse proxy before exposing the endpoint publicly.
+
 ## Verify
 
 ```text
+npm run validate:data
 npm test
+npm run test:coverage
 npm run check
 ```
+
+`npm run check` performs syntax checks, data validation, the full test suite, the Schema contract test, and coverage thresholds (90% lines, 75% branches, 95% functions).

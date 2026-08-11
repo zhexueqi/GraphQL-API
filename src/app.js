@@ -26,7 +26,7 @@ export function isAuthorized(authorization, expectedToken) {
   if (typeof authorization !== "string") {
     return false;
   }
-  const match = /^Bearer ([^\s]+)$/.exec(authorization);
+  const match = /^Bearer ([^\s]+)$/i.exec(authorization);
   return match !== null && tokenMatches(match[1], expectedToken);
 }
 

@@ -9,7 +9,9 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test --test-concurrency=1",
-    "check": "node --check src/config.js && node --check src/data.js && node --check src/schema.js && node --check src/app.js && node --check src/server.js && npm test"
+    "test:coverage": "node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-lines=90 --test-coverage-branches=75 --test-coverage-functions=95",
+    "validate:data": "node scripts/validate-data.js",
+    "check": "node --check src/config.js && node --check src/data.js && node --check src/schema.js && node --check src/app.js && node --check src/server.js && node --check scripts/validate-data.js && npm run validate:data && npm run test:coverage"
   },
   "dependencies": {
     "@apollo/server": "^5.0.0",

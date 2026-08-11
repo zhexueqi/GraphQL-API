@@ -44,9 +44,12 @@ async function request(body, authorization = `Bearer ${TOKEN}`) {
 }
 
 describe("authorization", () => {
-  it("uses an exact Bearer token", () => {
+  it("accepts case-insensitive Bearer schemes with an exact token", () => {
     assert.equal(isAuthorized(`Bearer ${TOKEN}`, TOKEN), true);
-    assert.equal(isAuthorized(`bearer ${TOKEN}`, TOKEN), false);
+    assert.equal(isAuthorized(`bearer ${TOKEN}`, TOKEN), true);
+    assert.equal(isAuthorized(`BEARER ${TOKEN}`, TOKEN), true);
+    assert.equal(isAuthorized(`Basic ${TOKEN}`, TOKEN), false);
+    assert.equal(isAuthorized("Bearer", TOKEN), false);
     assert.equal(isAuthorized(`Bearer ${TOKEN} extra`, TOKEN), false);
     assert.equal(isAuthorized(undefined, TOKEN), false);
   });
