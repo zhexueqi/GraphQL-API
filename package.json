@@ -1,0 +1,20 @@
+{
+  "name": "backend-coding-test-graphql",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test --test-concurrency=1",
+    "check": "node --check src/config.js && node --check src/data.js && node --check src/schema.js && node --check src/app.js && node --check src/server.js && npm test"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@as-integrations/express5": "^1.1.2",
+    "express": "^5.1.0",
+    "graphql": "^16.11.0"
+  }
+}
